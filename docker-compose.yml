@@ -1,0 +1,102 @@
+version: "3.7"
+services:
+#   bootnode:
+#     container_name: bootnode
+#     image: ipfs-private-v2:latest
+#     volumes:
+#          - /tmp/ipfs/nexus:/usr/local/nexus
+#     environment:
+#           - IS_BOOTNODE=true
+#           - ENV_SWARM_KEY=09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+#           - BOOTNODE_IP=192.168.1.100
+#     expose:
+#          - 8080
+#          - 5001
+#     ports:
+#          - 8080:8080
+#          - 5000:5001      
+#     networks:
+#          private_net:
+#             ipv4_address: "192.168.1.100"
+
+  krill_1:    
+    container_name: krill_1
+    image: krill_1
+    volumes:
+        - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+        - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+        - BOOTNODE_IP=192.168.1.101
+        - KRILL_TEST=true
+        - KRILL_USE_TA=true
+        - KRILL_AUTH_TOKEN=itworks
+        - IS_BOOTNODE=true
+    expose:
+       - 4001 
+       - 8080
+       - 8081
+       - 5001
+       - 3000
+    ports:
+        - 3000:3000
+        - 4101:4001 
+        - 8180:8080
+        - 8181:8081
+        - 5101:5001
+    networks:
+       private_net:
+           ipv4_address: "192.168.1.101"
+
+  krill_2:
+    depends_on:
+        - krill_1
+    container_name: krill_2
+    image: krill_2
+    volumes:
+        - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+        - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+        - BOOTNODE_IP=192.168.1.101
+        - KRILL_AUTH_TOKEN=itworks
+        - KRILL_TEST=true
+        - KRILL_USE_TA=true
+    expose:
+        - 3000
+        - 4001 
+        - 8080
+        - 8081
+        - 5001
+    ports:
+        - 3100:3000
+        - 4201:4001 
+        - 8280:8080
+        - 8281:8081
+        - 5202:5001
+    networks:
+       private_net:
+           ipv4_address: "192.168.1.102"
+
+  routinator_1:
+    depends_on:
+         - krill_1
+    container_name: routinator_1
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.103
+    expose:
+         - 9556 
+    ports:
+         - 9556:9556 
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.103"              
+           
+networks:
+  private_net:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 192.168.1.0/24
