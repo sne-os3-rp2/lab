@@ -21,6 +21,9 @@ parser.add_argument("-co", "--count", help="Number of child CA to add")
 parser.add_argument("-rd", "--roadepth", help="Depth to break prefix to create roas for")
 parser.add_argument("-mo", "--mode", help="cli or http", default="cli")
 parser.add_argument("-st", "--sleeptime", help="seconds to sleep between request to prevent overwhelminh", default=2)
+parser.add_argument("-pr", "--caprefix", help="prefix to append to ca added", default="ca")
+
+
 
 args = parser.parse_args()
 no_ca = args.count
@@ -29,6 +32,7 @@ token = args.token
 mode = args.mode
 roa_depth = int(args.roadepth) - 1
 sleep_time = float(args.sleeptime)
+ca_prefix = args.caprefix
 
 if mode != "cli" and mode != "http":
     print("specify mode using -mo flag. cli and http are supported mode")
@@ -134,7 +138,7 @@ def get_roas_from_delegation(delegation, depth):
 
 for n in range(int(no_ca)):
     index = n+1
-    ca = f"ca_{index}"
+    ca = f"{ca_prefix}_{index}"
     try:
         add_ca(ca, host)
         print(f"successfully added {ca} as a CA")
