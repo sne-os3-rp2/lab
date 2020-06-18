@@ -1,4 +1,4 @@
-FROM krill-ipfs
+FROM dadepo/krill-ipfs
 
 
 WORKDIR /
@@ -8,12 +8,6 @@ COPY ./data_generator.py /data_generator.py
 RUN touch /var/krill/krill.log
 RUN apk add python3
 RUN apk add wget
-EXPOSE 3000
-EXPOSE 3001
-EXPOSE 4001 
-EXPOSE 8080
-EXPOSE 8081
-EXPOSE 5001
 
 
 CMD ["bash", "-c", "touch /tmp/lol ; krill -c /var/krill/data/krill.conf"]
