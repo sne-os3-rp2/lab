@@ -19,11 +19,7 @@ services:
        - 8081
        - 5001
     ports:
-        - 3000:3000
-        - 4101:4001 
-        - 8180:8080
-        - 8181:8081
-        - 5101:5001
+       - 3001:3000
     networks:
        private_net:
            ipv4_address: "192.168.1.101"
@@ -48,11 +44,7 @@ services:
         - 8081
         - 5001
     ports:
-        - 3100:3000
-        - 4201:4001 
-        - 8280:8080
-        - 8281:8081
-        - 5202:5001
+        - 3002:3000
     networks:
        private_net:
            ipv4_address: "192.168.1.102"
@@ -61,20 +53,191 @@ services:
     depends_on:
          - krill_1
     container_name: routinator_1     
-    build: ./routinator_1
+    build: ./routinator_img
     image: routinator_1
     volumes:
          - /tmp/ipfs/nexus:/usr/local/nexus/
     environment:
          - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
-         - BOOTNODE_IP=192.168.1.103
+         - BOOTNODE_IP=192.168.1.101
     expose:
          - 9556 
     ports:
-         - 9556:9556 
+        - 1556:9556
     networks:
       private_net:
-            ipv4_address: "192.168.1.103"              
+            ipv4_address: "192.168.1.103" 
+
+  routinator_2:
+   depends_on:
+        - krill_1
+   container_name: routinator_2     
+   build: ./routinator_img
+   image: routinator_1
+   volumes:
+        - /tmp/ipfs/nexus:/usr/local/nexus/
+   environment:
+        - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+        - BOOTNODE_IP=192.168.1.101
+   expose:
+        - 9556 
+   ports:
+        - 2556:9556     
+   networks:
+     private_net:
+           ipv4_address: "192.168.1.104"  
+
+  routinator_3:
+    depends_on:
+         - krill_1
+    container_name: routinator_3     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+          - 3556:9556
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.105"
+
+  routinator_4:
+    depends_on:
+         - krill_1
+    container_name: routinator_4     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+         - 4556:9556     
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.106"
+
+  routinator_5:
+    depends_on:
+         - krill_1
+    container_name: routinator_5     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+         - 5556:9556
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.107"
+
+  routinator_6:
+    depends_on:
+         - krill_1
+    container_name: routinator_6     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+         - 6556:9556
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.108"
+
+  routinator_7:
+    depends_on:
+         - krill_1
+    container_name: routinator_7     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+         - 7556:9556       
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.109"
+
+  routinator_8:
+    depends_on:
+         - krill_1
+    container_name: routinator_8     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+        - 8556:9556
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.110"
+
+  routinator_9:
+    depends_on:
+         - krill_1
+    container_name: routinator_9     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+         - 9556:9556
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.111"
+
+  routinator_10:
+    depends_on:
+         - krill_1
+    container_name: routinator_10     
+    build: ./routinator_img
+    image: routinator_1
+    volumes:
+         - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+         - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+         - BOOTNODE_IP=192.168.1.101
+    expose:
+         - 9556 
+    ports:
+         - 9956:9556
+    networks:
+      private_net:
+            ipv4_address: "192.168.1.112"           
            
 networks:
   private_net:

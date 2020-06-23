@@ -9,6 +9,4 @@ RUN apk add python3
 RUN apk add wget
 RUN touch /var/krill/krill.log
 
-
-CMD ["bash", "-c", "touch /tmp/lol ; krill -c /var/krill/data/krill.conf"]
-# CMD ["krill", "-c", "/var/krill/data/krill.conf"]
+CMD ["bash", "-c", "krill -c /var/krill/data/krill.conf"]
