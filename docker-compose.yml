@@ -63,7 +63,7 @@ services:
     expose:
          - 9556 
     ports:
-        - 1556:9556
+        - 7001:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.103" 
@@ -82,7 +82,7 @@ services:
    expose:
         - 9556 
    ports:
-        - 2556:9556     
+        - 7002:9556     
    networks:
      private_net:
            ipv4_address: "192.168.1.104"  
@@ -101,7 +101,7 @@ services:
     expose:
          - 9556 
     ports:
-          - 3556:9556
+          - 7003:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.105"
@@ -120,7 +120,7 @@ services:
     expose:
          - 9556 
     ports:
-         - 4556:9556     
+         - 7004:9556     
     networks:
       private_net:
             ipv4_address: "192.168.1.106"
@@ -139,7 +139,7 @@ services:
     expose:
          - 9556 
     ports:
-         - 5556:9556
+         - 7005:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.107"
@@ -158,7 +158,7 @@ services:
     expose:
          - 9556 
     ports:
-         - 6556:9556
+         - 7006:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.108"
@@ -177,7 +177,7 @@ services:
     expose:
          - 9556 
     ports:
-         - 7556:9556       
+         - 7007:9556       
     networks:
       private_net:
             ipv4_address: "192.168.1.109"
@@ -196,7 +196,7 @@ services:
     expose:
          - 9556 
     ports:
-        - 8556:9556
+        - 7008:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.110"
@@ -215,7 +215,7 @@ services:
     expose:
          - 9556 
     ports:
-         - 9556:9556
+         - 7009:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.111"
@@ -234,7 +234,7 @@ services:
     expose:
          - 9556 
     ports:
-         - 9956:9556
+         - 7010:9556
     networks:
       private_net:
             ipv4_address: "192.168.1.112"           
