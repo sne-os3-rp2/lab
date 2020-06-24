@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  krill_unmodified_1:
+    container_name: krill_unmodified_1
+    build: ./krill_img
+    volumes:
+      - ./krill_1_data:/var/krill/data/
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - KRILL_TEST=true
+      - KRILL_USE_TA=true
+      - KRILL_AUTH_TOKEN=itworks
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    networks:
+      private_net:
+        ipv4_address: "192.168.2.101"
+
+  routinator_unmodified_1:
+    depends_on:
+      - krill_unmodified_1
+    container_name: routinator_unmodified_1
+    build: ./routinator_img
+    expose:
+      - 9556
+    ports:
+      - 7001:9556
+    networks:
+      private_net:
+        ipv4_address: "192.168.2.103"
+networks:
+  private_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.2.0/24

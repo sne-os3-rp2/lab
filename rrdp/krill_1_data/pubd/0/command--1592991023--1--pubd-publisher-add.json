@@ -1,0 +1,18 @@
+{
+  "actor": "krill",
+  "time": "2020-06-24T09:30:23.072249182Z",
+  "handle": "0",
+  "version": 1,
+  "sequence": 1,
+  "details": {
+    "add_publisher": [
+      "ta",
+      "a6d2af00b3063c37c9d05010f3741b28f1fdecb4"
+    ]
+  },
+  "effect": {
+    "events": [
+      1
+    ]
+  }
+}

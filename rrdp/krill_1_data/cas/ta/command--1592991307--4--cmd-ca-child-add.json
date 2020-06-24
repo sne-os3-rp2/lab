@@ -1,0 +1,23 @@
+{
+  "actor": "krill",
+  "time": "2020-06-24T09:35:07.543699284Z",
+  "handle": "ta",
+  "version": 4,
+  "sequence": 4,
+  "details": {
+    "child_add": [
+      "k1_1",
+      null,
+      {
+        "asn": "",
+        "v4": "1.0.0.0/8",
+        "v6": ""
+      }
+    ]
+  },
+  "effect": {
+    "events": [
+      4
+    ]
+  }
+}

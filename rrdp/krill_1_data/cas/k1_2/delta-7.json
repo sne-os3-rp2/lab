@@ -1,0 +1,7 @@
+{
+  "id": "k1_2",
+  "version": 7,
+  "details": {
+    "route_authorization_added": "2.0.0.0/9-9 => 2"
+  }
+}

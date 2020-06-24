@@ -1,0 +1,15 @@
+{
+  "actor": "krill",
+  "time": "2020-06-24T09:35:11.838104689Z",
+  "handle": "k1_1",
+  "version": 2,
+  "sequence": 2,
+  "details": {
+    "repo_update": null
+  },
+  "effect": {
+    "events": [
+      2
+    ]
+  }
+}
