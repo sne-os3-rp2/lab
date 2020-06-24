@@ -43,7 +43,7 @@ services:
     ports:
        - 3001:3000
     networks:
-       private_net:
+       ipfs_private_net:
            ipv4_address: \"192.168.1.101\"
 
   krill_2:
@@ -70,10 +70,10 @@ services:
     ports:
         - 3002:3000
     networks:
-       private_net:
+       ipfs_private_net:
            ipv4_address: \"192.168.1.102\"
 networks:
-  private_net:
+  ipfs_private_net:
     driver: bridge
     ipam:
      config:
@@ -100,7 +100,7 @@ for i in range(1, count+1):
     routinator_dicts["expose"] = [9556]
     routinator_dicts["ports"] = [f"{7000+i}:9556"]
     routinator_dicts["networks"] = {
-        "private_net": {
+        "ipfs_private_net": {
             "ipv4_address": dq(f'{(base_id + i).exploded}')
         }
     }

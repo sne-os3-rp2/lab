@@ -16,7 +16,7 @@ services:
     ports:
       - 3000:3000
     networks:
-      private_net:
+      normal_private_net:
         ipv4_address: "192.168.2.101"
 
   routinator_unmodified_1:
@@ -29,10 +29,10 @@ services:
     ports:
       - 7001:9556
     networks:
-      private_net:
+      normal_private_net:
         ipv4_address: "192.168.2.103"
 networks:
-  private_net:
+  normal_private_net:
     driver: bridge
     ipam:
       config:
