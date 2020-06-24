@@ -23,4 +23,3 @@ sleep_time = float(args.sleeptime)
 
 
 subprocess.call(f"docker exec -it krill_1 /usr/bin/python3 data_generator.py --token itworks --host https://localhost:3000 --count {no_ca} --roadepth {roa_depth} --sleeptime {sleep_time} -pr k1", shell=True)
-subprocess.call(f"docker exec -it krill_2 /usr/bin/python3 data_generator.py --token itworks --host https://localhost:3000 --count {no_ca} --roadepth {roa_depth} --sleeptime {sleep_time} -pr k2", shell=True)

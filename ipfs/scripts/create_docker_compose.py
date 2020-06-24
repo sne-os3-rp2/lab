@@ -46,32 +46,6 @@ services:
        ipfs_private_net:
            ipv4_address: \"192.168.1.101\"
 
-  krill_2:
-    depends_on:
-        - krill_1
-    container_name: krill_2
-    build: ./krill_2
-    volumes:
-        - /tmp/ipfs/nexus:/usr/local/nexus/
-    cap_add:
-        - NET_ADMIN
-    environment:
-        - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
-        - BOOTNODE_IP=192.168.1.101
-        - KRILL_AUTH_TOKEN=itworks
-        - KRILL_TEST=true
-        - KRILL_USE_TA=true
-    expose:
-        - 3000
-        - 4001 
-        - 8080
-        - 8081
-        - 5001
-    ports:
-        - 3002:3000
-    networks:
-       ipfs_private_net:
-           ipv4_address: \"192.168.1.102\"
 networks:
   ipfs_private_net:
     driver: bridge
