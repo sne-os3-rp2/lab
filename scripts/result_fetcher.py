@@ -98,6 +98,7 @@ def run(output_file):
             if prev_update == last_update_done_at:
                 print("Not writing to file since validation has not occured since last time")
             else:
+                print("A validation run has occurred. Updating output file")
                 write_result_to_file(page, target_port, last_update_done_at, output_file)
         else:
             print("first run")
