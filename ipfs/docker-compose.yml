@@ -137,6 +137,91 @@ services:
     networks:
       private_net:
         ipv4_address: "192.168.1.107"
+  routinator_6:
+    depends_on:
+      - krill_1
+    container_name: routinator_6
+    build: ./routinator_img
+    volumes:
+      - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+      - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+      - BOOTNODE_IP=192.168.1.101
+    expose:
+      - 9556
+    ports:
+      - 7006:9556
+    networks:
+      private_net:
+        ipv4_address: "192.168.1.108"
+  routinator_7:
+    depends_on:
+      - krill_1
+    container_name: routinator_7
+    build: ./routinator_img
+    volumes:
+      - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+      - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+      - BOOTNODE_IP=192.168.1.101
+    expose:
+      - 9556
+    ports:
+      - 7007:9556
+    networks:
+      private_net:
+        ipv4_address: "192.168.1.109"
+  routinator_8:
+    depends_on:
+      - krill_1
+    container_name: routinator_8
+    build: ./routinator_img
+    volumes:
+      - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+      - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+      - BOOTNODE_IP=192.168.1.101
+    expose:
+      - 9556
+    ports:
+      - 7008:9556
+    networks:
+      private_net:
+        ipv4_address: "192.168.1.110"
+  routinator_9:
+    depends_on:
+      - krill_1
+    container_name: routinator_9
+    build: ./routinator_img
+    volumes:
+      - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+      - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+      - BOOTNODE_IP=192.168.1.101
+    expose:
+      - 9556
+    ports:
+      - 7009:9556
+    networks:
+      private_net:
+        ipv4_address: "192.168.1.111"
+  routinator_10:
+    depends_on:
+      - krill_1
+    container_name: routinator_10
+    build: ./routinator_img
+    volumes:
+      - /tmp/ipfs/nexus:/usr/local/nexus/
+    environment:
+      - ENV_SWARM_KEY=/09b7fe038a241d5e38650b0f1811933644d6195814f863902d44698fa38b8cfa
+      - BOOTNODE_IP=192.168.1.101
+    expose:
+      - 9556
+    ports:
+      - 7010:9556
+    networks:
+      private_net:
+        ipv4_address: "192.168.1.112"
 networks:
   private_net:
     driver: bridge
