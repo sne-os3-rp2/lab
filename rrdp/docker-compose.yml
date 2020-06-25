@@ -19,18 +19,6 @@ services:
       normal_private_net:
         ipv4_address: "192.168.2.101"
 
-  routinator_unmodified_1:
-    depends_on:
-      - krill_unmodified_1
-    container_name: routinator_unmodified_1
-    build: ./routinator_img
-    expose:
-      - 9556
-    ports:
-      - 7001:9556
-    networks:
-      normal_private_net:
-        ipv4_address: "192.168.2.103"
 networks:
   normal_private_net:
     driver: bridge

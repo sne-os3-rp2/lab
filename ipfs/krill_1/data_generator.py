@@ -22,7 +22,8 @@ parser.add_argument("-rd", "--roadepth", help="Depth to break prefix to create r
 parser.add_argument("-mo", "--mode", help="cli or http", default="cli")
 parser.add_argument("-st", "--sleeptime", help="seconds to sleep between request to prevent overwhelminh", default=2)
 parser.add_argument("-pr", "--caprefix", help="prefix to append to ca added", default="ca")
-
+parser.add_argument("-si", "--startindex", help="index number to start counting from", default=0)
+parser.add_argument("-sr", "--startrange", help="range to start allocating from", default="1.0.0.0/24")
 
 
 args = parser.parse_args()
@@ -33,12 +34,15 @@ mode = args.mode
 roa_depth = int(args.roadepth) - 1
 sleep_time = float(args.sleeptime)
 ca_prefix = args.caprefix
+start_index = int(args.startindex)
+start_range = args.startrange
 
 if mode != "cli" and mode != "http":
     print("specify mode using -mo flag. cli and http are supported mode")
     exit(-1)
 
-
+# global. Modified by functions below
+next_allocated_range = ipaddress.ip_network(start_range)
 
 
 # cargo run --bin krillc add --ca ca_in --token itworks
@@ -83,23 +87,22 @@ def grant_repo_rights(ca_handle, server):
         subprocess.call(f"krillc repo update embedded --ca {ca_handle} --token {str(token)}", shell=True)
 
 # cargo run --bin krillc children add embedded --ca ta --token itworks --child ca_in --ipv4 "100.0.0.0/8,200.0.0.0/8"
-def delegete_resource(ca_handle, server, index):
+def delegete_resource(ca_handle, server, index, allocating_range):
     if mode == "http":
        # https://{domain}:{port}/api/v1/cas/{ca_handle}/children
        url = f"{server}/api/v1/cas/ta/children"
        req = urllib.request.Request(url, None, {"Authorization": f"Bearer {str(token)}"})
        req.add_header('Content-Type', 'application/json; charset=utf-8')
-       jsondata = json.dumps({"handle": ca_handle,"resources": {"asn": "", "v4": f"{index}.0.0.0/8", "v6":""},"auth": "embedded"})
+       jsondata = json.dumps({"handle": ca_handle,"resources": {"asn": "", "v4": allocating_range, "v6":""},"auth": "embedded"})
        jsondataasbytes = jsondata.encode('utf-8')
        req.add_header('Content-Length', len(jsondataasbytes))
        return urllib.request.urlopen(req, jsondataasbytes, context=gcontext)
     else:
-        subprocess.call(f"krillc children add embedded --ca ta --token itworks --child {ca_handle} --ipv4 {index}.0.0.0/8", shell=True)
+        subprocess.call(f"krillc children add embedded --ca ta --token {str(token)} --child {ca_handle} --ipv4 {allocating_range}", shell=True)
 
-def add_roa(ca_handle, server, index, r_depth):
+def add_roa(ca_handle, server, index, r_depth, delegation):
     # https://{domain}:{port}/api/v1/cas/{ca_handle}/routes
 
-    delegation = f"{index}.0.0.0/8"
     roas_ranges = get_roas_from_delegation(delegation, r_depth)
 
     url = f"{server}/api/v1/cas/{ca_handle}/routes"
@@ -136,9 +139,10 @@ def get_roas_from_delegation(delegation, depth):
 
 
 
-for n in range(int(no_ca)):
+for n in range(start_index, int(no_ca) + start_index):
     index = n+1
     ca = f"{ca_prefix}_{index}"
+    allocating_range = next_allocated_range.exploded
     try:
         add_ca(ca, host)
         print(f"successfully added {ca} as a CA")
@@ -146,8 +150,8 @@ for n in range(int(no_ca)):
     except Exception as e: 
          print("adding ca failed with", e)
     try:
-        delegete_resource(ca, host, index)
-        print(f"successfully delegated resources to {ca}")
+        delegete_resource(ca, host, index, allocating_range)
+        print(f"successfully delegated {allocating_range} resources to {ca}")
         time.sleep(sleep_time)
     except Exception as e: 
          print("delegating resource failed with", e)
@@ -165,9 +169,13 @@ for n in range(int(no_ca)):
          print("granting repo rights failed with", e)
     try:
         time.sleep(sleep_time*2)
-        add_roa(ca, host, index, roa_depth)
-        print(f"successfully added roas for {ca}")
+        add_roa(ca, host, index, roa_depth, allocating_range)
+        print(f"successfully added roas based on {allocating_range} for {ca}")
     except Exception as e: 
          print("creating roas failed with", e)
+    
+    # set the next allocating range
+    next_allocated_range = ipaddress.ip_network(f'{(next_allocated_range.network_address + 256).compressed}/24')
+    print(f'Next range to be allocated is: {next_allocated_range.exploded}')
 
                  
