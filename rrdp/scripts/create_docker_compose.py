@@ -24,7 +24,7 @@ services:
     container_name: krill_unmodified_1
     build: ./krill_img
     volumes:
-        - ./krill_1_data:/var/krill/data/
+        - ./krill_repo:/var/krill/data/repo
     cap_add:
         - NET_ADMIN
     environment:
