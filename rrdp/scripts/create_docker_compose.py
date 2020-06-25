@@ -38,6 +38,8 @@ services:
     networks:
        normal_private_net:
            ipv4_address: \"192.168.2.101\"
+    extra_hosts:
+       - \"krill1:192.168.2.101\"
 
 networks:
   normal_private_net:
@@ -66,6 +68,7 @@ for i in range(1, count+1):
             "ipv4_address": dq(f'{(base_id + i).exploded}')
         }
     }
+    routinator_dicts["extra_hosts"] = ["krill1:192.168.2.101"]
     compose_dict["services"][f"routinator_unmodified_{i}"] = routinator_dicts
 
 

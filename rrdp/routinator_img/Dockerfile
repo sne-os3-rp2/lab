@@ -4,7 +4,7 @@ WORKDIR /
 
 COPY ./routinator.conf /home/routinator/routinator.conf
 COPY ./init_tal.sh /init_tal.sh
-
+COPY ./issuer.crt /home/routinator/certs/
 
 USER 0
 RUN apk add --no-cache sudo bash
