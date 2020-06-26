@@ -25,6 +25,7 @@ services:
     build: ./krill_1
     volumes:
         - /tmp/ipfs/nexus:/usr/local/nexus/
+        - ./krill_repo:/var/krill/data/repo
     cap_add:
         - NET_ADMIN
     environment:
