@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser()
 
 # script configuration
 
-parser.add_argument("-co", "--count", help="Number of child CA to add")
+parser.add_argument("-c", "--count", help="Number of child CA to add")
 parser.add_argument("-rd", "--roadepth", help="Depth to break prefix to create roas for")
 parser.add_argument("-mo", "--mode", help="cli or http", default="cli")
 parser.add_argument("-st", "--sleeptime", help="seconds to sleep between request to prevent overwhelminh", default=2)
