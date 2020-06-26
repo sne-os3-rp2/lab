@@ -61,27 +61,21 @@ def write_result_to_file(page, port, last_update_done_at, out_file):
         page = fetch_status_page(f"http://localhost:{str(port)}/status")
         r_type = "rrdp" if is_rrdp_result(page) else "ipfs"
 
-         # extract total duration of last run  
-        last_update_duration_string = page.split("\n")[5]
-        update_duration = extract_last_update_duration(last_update_duration_string)
-     
-        # extract ipfs or rrdp duration
-        if is_rrdp_result(page):
-             # get rrdp time
-             rrdp_durations_string = page.split("\n")[13]
-             rrdp_duration = extract_rrdp_durations(rrdp_durations_string)
-             out_file.write(f"{port},'{r_type}','{last_update_done_at}','{update_duration}','{rrdp_duration}'\n")
-        else:
-             # get ipfs time 
-             ipfs_durations_string = page.split("\n")[14]
-             ipfs_duration = extract_ipfs_durations(ipfs_durations_string)
-             out_file.write(f"{port},'{r_type}','{last_update_done_at}','{update_duration}','{ipfs_duration}'\n")
-         
+        update_duration = ""
+        fetch_duration = ""
+        for line in page.split("\n"):
+            if "last-update-duration" in line:
+                update_duration = extract_last_update_duration(line)
+            if "https" in line:
+                fetch_duration = extract_rrdp_durations(line)
+            if "ipns" in line:
+                fetch_duration = extract_ipfs_durations(line)
+
+        out_file.write(f"{port},'{r_type}','{last_update_done_at}','{update_duration}','{fetch_duration}'\n")
+        
         prev_update_times[port] = last_update_done_at
 
 
-        
-    
 
 def run(output_file):
     target_port = base_port
@@ -89,22 +83,23 @@ def run(output_file):
       try:  
         target_port = target_port + 1
         page = fetch_status_page(f"http://localhost:{str(target_port)}/status")
-    
 
-        # extract time of last run
-        last_update_done_at_string = page.split("\n")[3]
-        last_update_done_at = extract_last_done_at(last_update_done_at_string)
-    
-        if target_port in prev_update_times:
-            prev_update = prev_update_times.get(target_port)
-            if prev_update == last_update_done_at:
-                print("Not writing to file since validation has not occured since last time")
-            else:
-                print("A validation run has occurred. Updating output file")
-                write_result_to_file(page, target_port, last_update_done_at, output_file)
-        else:
-            print("first run")
-            write_result_to_file(page, target_port, last_update_done_at, output_file)
+        for line in page.split("\n"):
+            # - extract last_update_done_at
+
+            if "last-update-done-at" in line:
+                last_update_done_at = extract_last_done_at(line)
+                if target_port in prev_update_times:
+                    prev_update = prev_update_times.get(target_port)
+                    if prev_update == last_update_done_at:
+                        print("Not writing to file since validation has not occured since last time")
+                    else:
+                        print("A validation run has occurred. Updating output file")
+                        write_result_to_file(page, target_port, last_update_done_at, output_file)
+                else:
+                    print("first run")
+                    write_result_to_file(page, target_port, last_update_done_at, output_file)
+
       except Exception as e:
           print(f"Could not retrieve from http://localhost:{str(target_port)}/status. Error was {e}...skipping")
           continue       
