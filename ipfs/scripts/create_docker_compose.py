@@ -82,5 +82,5 @@ for i in range(1, count+1):
     compose_dict["services"][f"routinator_{i}"] = routinator_dicts
 
 
-with open(r"../docker-compose.yml", "w") as out_file:
+with open(r"./docker-compose.yml", "w") as out_file:
     yaml.dump(compose_dict, out_file)
