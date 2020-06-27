@@ -10,10 +10,14 @@ parser = argparse.ArgumentParser()
 base_port = 7000
 parser.add_argument("-c", "--count", help="number of routinator instances to get result from") 
 parser.add_argument("-d", "--duration", help="Duration to run for", default=120) 
+parser.add_argument("-cc", "--cacount", help="Number of count") 
+parser.add_argument("-rt", "--runtype", help="Number of count") 
 
 args = parser.parse_args()
 count = int(args.count)
 duration = int(args.duration)
+ca_count = int(args.cacount)
+h_type = args.runtype
 
 # port -> last_update_time
 prev_update_times = {}
@@ -53,7 +57,8 @@ def is_rrdp_result(page):
     return "ipns" not in page
 
 def create_output_file():
-    f = open("output.csv", "w")
+    tadetime = datetime.now().strftime('%Y%b%d-%H:%M')
+    f = open(f"{tadetime}_{h_type}_{count}_{ca_count}_output.csv", "w")
     f.write("'port','type','validation_time','update_duration','repo_fetch'\n")
     return f
 

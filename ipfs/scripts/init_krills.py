@@ -13,7 +13,7 @@ parser.add_argument("-c", "--count", help="Number of child CA to add")
 parser.add_argument("-rd", "--roadepth", help="Depth to break prefix to create roas for")
 parser.add_argument("-mo", "--mode", help="cli or http", default="cli")
 parser.add_argument("-st", "--sleeptime", help="seconds to sleep between request to prevent overwhelminh", default=2)
-parser.add_argument("-pr", "--caprefix", help="ca prefix", default="ka")
+parser.add_argument("-pr", "--caprefix", help="ca prefix", default="bob")
 
 parser.add_argument("-sr", "--startrange", help="range to start allocating from", default="1.0.0.0/24")
 
