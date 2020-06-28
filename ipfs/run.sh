@@ -23,17 +23,18 @@ rd = int(args.rangedepth)
 r_poll = int(args.pollduration)
 r_type = args.runtype
 
+
 subprocess.call(f"python3 scripts/create_docker_compose.py -c {r_count}", shell=True)
 subprocess.call(f"docker-compose up -d --build krill_1", shell=True)
 time.sleep(10)
-subprocess.call(f"python3 scripts/init_krills.py -co {c_count} -rd {rd}", shell=True)
 
+subprocess.call(f"python3 scripts/init_krills.py -c {c_count} -rd {rd}", shell=True)
 
 subprocess.call(f"docker-compose up --build -d", shell=True)
 
-subprocess.call(f"python3 ../shared/result_fetcher.py -c {r_count} -d {r_poll} -cc {c_count}", shell=True)
+subprocess.call(f"python3 ../shared/result_fetcher.py -c {r_count} -d {r_poll} -cc {c_count} -rt ipfs", shell=True)
 
 
-subprocess.call(f"docker-compose down", shell=True)
+subprocess.call(f"docker-compose down --remove-orphans", shell=True)
 
 
