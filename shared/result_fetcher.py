@@ -59,7 +59,7 @@ def is_rrdp_result(page):
 def create_output_file():
     tadetime = datetime.now().strftime('%Y%b%d-%H:%M')
     f = open(f"{tadetime}_{h_type}_{count}_{ca_count}_output.csv", "w")
-    f.write("'port','type','validation_time','update_duration','repo_fetch'\n")
+    f.write("port,type,validation_time,update_duration,repo_fetch\n")
     return f
 
 def write_result_to_file(page, port, last_update_done_at, out_file):
@@ -76,7 +76,7 @@ def write_result_to_file(page, port, last_update_done_at, out_file):
             if "ipns" in line:
                 fetch_duration = extract_ipfs_durations(line)
 
-        out_file.write(f"{port},'{r_type}','{last_update_done_at}','{update_duration}','{fetch_duration}'\n")
+        out_file.write(f"{port},{r_type},{last_update_done_at},{update_duration},{fetch_duration}\n")
         
         prev_update_times[port] = last_update_done_at
 
